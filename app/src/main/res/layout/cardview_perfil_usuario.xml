@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cvUsuario"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".Activity.PerfilUsuario">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="7dp"
+        >
+
+        <ImageView
+            android:id="@+id/imgMascota"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/cat"
+            android:scaleType="centerInside"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+
+            <TextView
+                android:id="@+id/tvRanking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ranking"
+                android:textSize="12pt"
+                android:layout_marginHorizontal="30dp"
+                />
+
+            <ImageView
+                android:id="@+id/huesoamarillo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/huesoamarillo"
+                android:layout_marginLeft="4dp"
+                android:layout_gravity="center"
+                />
+
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
