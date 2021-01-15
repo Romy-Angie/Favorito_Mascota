@@ -55,15 +55,15 @@ public  class MainActivity extends AppCompatActivity {
     public static String CANAL_ID = "canal";
     private static final String TAG = "FIREBASE TOKEN";
 
-    private static String ID_DISPOSITIVO_CAT = "-MNpWG_1zrRTk2mo4mvg";
-    private static String ID_DISPOSITIVO_DOG = "-MNpVKNUDGo-tPAh9jiR";
+    private static String ID_CAT = "-MQT_hZZQ3DNrtQFFBVY";
+    private static String ID_DOG = "-MQT_jYRIF2aI-mOaR7m";
 
-    private static String ID_DISPOSITIVO_NEW;
+    private static String ID_DISPOSITIVO = ID_DOG;
 
-    public static String MASCOTA_RECEPTOR_CAT ="estrella.chsa";
-    public static String MASCOTA_RECEPTOR_DOG ="anmy.dev";
-    public static String MASCOTA_EMISOR_CAT="estrella.chsa";
-    public static String MASCOTA_EMISOR_DOG="anmy.dev";
+    public static String CAT ="estrella.chsa";
+    public static String DOG ="anmy.dev";
+    public static String MASCOTA_RECEPTOR= DOG;
+    public static String MASCOTA_EMISOR= CAT;
 
 
     @Override
@@ -87,7 +87,24 @@ public  class MainActivity extends AppCompatActivity {
 
     }
 
-    public void lanzarNotificacion(String urlfoto){
+    public void lanzarNotificacionLike(String urlfoto){
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        enviarRegistroLike(token, urlfoto);
+                    }
+                });
+    }
+
+    public void lanzarNotificacion(){
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
@@ -100,14 +117,10 @@ public  class MainActivity extends AppCompatActivity {
                         String token = task.getResult().getToken();
 
                         // Log and toast
-/*
                         String msg = getString(R.string.msg_token_fmt, token);
                         Log.d(TAG, msg);
                         Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-
- */
-                        enviarRegistroLike(token, urlfoto);
-
+                        enviarRegistro(token);
                     }
                 });
     }
@@ -143,12 +156,11 @@ public  class MainActivity extends AppCompatActivity {
     }
 
 
-
     private void enviarRegistroLike(String token, String urlfoto){
 
         RestApiAdapter restApiAdapter = new RestApiAdapter();
         EndPoints endPoints = restApiAdapter.establecerConexionRestAPI();
-        Call<UsuarioResponse> usuarioResponseCall = endPoints.registrarUsuario(token, MASCOTA_RECEPTOR_DOG, 1, urlfoto);
+        Call<UsuarioResponse> usuarioResponseCall = endPoints.registrarUsuario(token, MASCOTA_RECEPTOR, 1, urlfoto);
 
         usuarioResponseCall.enqueue(new Callback<UsuarioResponse>() {
             @Override
@@ -182,35 +194,12 @@ public  class MainActivity extends AppCompatActivity {
     }
 
 
-    public void toqueDOG(View v){
+    public void toqueAnimal(View v){
         Log.d("TOQUE_MASCOTA", "true");
-        final UsuarioResponse usuarioResponse = new UsuarioResponse(ID_DISPOSITIVO_DOG, "123", MASCOTA_RECEPTOR_DOG);
+        final UsuarioResponse usuarioResponse = new UsuarioResponse(ID_DISPOSITIVO, "123", MASCOTA_RECEPTOR);
         RestApiAdapter restApiAdapter = new RestApiAdapter();
         EndPoints endPoints = restApiAdapter.establecerConexionRestAPI();
-        Call<UsuarioResponse> usuarioResponseCall = endPoints.toqueAMascota(usuarioResponse.getId(), MASCOTA_EMISOR_CAT);
-        usuarioResponseCall.enqueue(new Callback<UsuarioResponse>() {
-            @Override
-            public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {
-                UsuarioResponse usuarioResponse1 = response.body();
-                Log.d("ID_FIREBASE", usuarioResponse1.getId());
-                Log.d("TOKEN_FIREBASE", usuarioResponse1.getToken());
-                Log.d("ANIMAL_FIREBASE", usuarioResponse1.getNombre());
-            }
-
-            @Override
-            public void onFailure(Call<UsuarioResponse> call, Throwable t) {
-
-            }
-        });
-
-    }
-
-    public void toqueCAT(View v){
-        Log.d("TOQUE_MASCOTA", "true");
-        final UsuarioResponse usuarioResponse = new UsuarioResponse(ID_DISPOSITIVO_CAT, "123", MASCOTA_RECEPTOR_CAT);
-        RestApiAdapter restApiAdapter = new RestApiAdapter();
-        EndPoints endPoints = restApiAdapter.establecerConexionRestAPI();
-        Call<UsuarioResponse> usuarioResponseCall = endPoints.toqueAMascota(usuarioResponse.getId(), MASCOTA_EMISOR_DOG);
+        Call<UsuarioResponse> usuarioResponseCall = endPoints.toqueAMascota(usuarioResponse.getId(), MASCOTA_EMISOR);
         usuarioResponseCall.enqueue(new Callback<UsuarioResponse>() {
             @Override
             public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {
@@ -255,7 +244,7 @@ public  class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.mNotificacion:
-               // lanzarNotificacion();
+               lanzarNotificacion();
 
                 break;
 
@@ -294,5 +283,10 @@ public  class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void OpenFragment(){
+        PageAdapter pageAdapter = new PageAdapter(getSupportFragmentManager(), agregarFragments());
+        pageAdapter.getItem(1);
+    }
 
 }

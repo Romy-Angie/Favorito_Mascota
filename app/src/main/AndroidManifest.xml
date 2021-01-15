@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.romychsa.favorito_mascota">
-    <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,30 +11,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.AcercaDe"
-            android:parentActivityName=".Activity.MainActivity"
-            >
+        <activity android:name=".Activity.PerfilUsuario"></activity>
+        <activity
+            android:name=".PerfilUsuario"
+            android:label="@string/title_activity_perfil_usuario"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.AcercaDe"
+            android:parentActivityName=".Activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.MainActivity" />
         </activity>
-        <activity android:name=".Activity.Contacto"
-            android:parentActivityName=".Activity.MainActivity"
-            >
+        <activity
+            android:name=".Activity.Contacto"
+            android:parentActivityName=".Activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.MainActivity" />
         </activity>
-        <activity android:name=".Activity.ConfigCuenta"
-            android:parentActivityName=".Activity.MainActivity"
-            >
+        <activity
+            android:name=".Activity.ConfigCuenta"
+            android:parentActivityName=".Activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.MainActivity" />
         </activity>
-        <activity android:name=".Activity.MainActivity" >
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
-               <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -47,12 +52,32 @@
                 android:value=".Activity.MainActivity" />
         </activity>
 
-        <service android:name=".Notificaciones.NotificationIDToken"
+        <service
+            android:name=".Notificaciones.NotificationService"
+            android:directBootAware="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <service
+            android:name=".Notificaciones.NotificationIDToken"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".Notificaciones.Receiver.ToqueUsuario">
+            <intent-filter>
+                <action android:name="TOQUE_ANIMAL" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".Notificaciones.Receiver.FollowUsuario">
+            <intent-filter>
+                <action android:name="SEGUIR_USUARIO" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

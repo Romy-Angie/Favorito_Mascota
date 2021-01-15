@@ -20,6 +20,7 @@ import com.romychsa.favorito_mascota.Adaptador.MascotaAdaptador;
 import com.romychsa.favorito_mascota.Adaptador.PerfilMascotaAdaptador;
 import com.romychsa.favorito_mascota.Pojo.Mascota;
 import com.romychsa.favorito_mascota.Presentador.IRecyclerViewFragmentPresenter;
+import com.romychsa.favorito_mascota.Presentador.IRecyclerViewFragmentPresenterPerfil;
 import com.romychsa.favorito_mascota.Presentador.RecyclerViewFragmentPresenter;
 import com.romychsa.favorito_mascota.Presentador.RecyclerViewPerfilFragmentPresenter;
 import com.romychsa.favorito_mascota.R;
@@ -32,7 +33,7 @@ public class PerfilFragment extends Fragment implements IPerfilFragment{
 
     public static ArrayList<Mascota> mascotasperfil;
     private RecyclerView listafotosMiMascotas;
-    private IRecyclerViewFragmentPresenter presenter;
+    private IRecyclerViewFragmentPresenterPerfil presenter;
     private String nombreUsuario;
 
 

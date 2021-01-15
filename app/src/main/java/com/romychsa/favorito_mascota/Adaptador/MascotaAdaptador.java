@@ -74,10 +74,8 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
                 mascotaViewHolder.tvRanking.setText(String.valueOf(ranking));
 
                 MainActivity mainActivity = new MainActivity();
-                mainActivity.lanzarNotificacion(urlfoto);
-                mainActivity.toqueDOG(v);
-
-
+                //mainActivity.lanzarNotificacionLike(urlfoto);
+                mainActivity.toqueAnimal(v);
             }
         });
 
@@ -96,10 +94,6 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
 
            }
        });*/
-
-
-
-
     }
 
     @Override

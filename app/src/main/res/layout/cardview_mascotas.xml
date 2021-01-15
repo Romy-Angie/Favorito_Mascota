@@ -18,10 +18,10 @@
             android:id="@+id/imgMascota"
             android:layout_width="match_parent"
             android:layout_height="@dimen/cardview_height"
-            android:src="@drawable/pet1"
+            android:src="@drawable/cat"
             android:scaleType="centerCrop"
             android:layout_gravity="center_horizontal"
-
+            android:onClick="toqueAnimal"
             />
 
         <LinearLayout

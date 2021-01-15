@@ -19,4 +19,6 @@ public interface EndPoints {
     @GET(ConstantesRestAPI.KEY_TOQUE_MASCOTA)
     Call<UsuarioResponse> toqueAMascota(@Path("id") String id, @Path("nombre") String nombre);
 
+    @GET(ConstantesRestAPI.KEY_FOLLOW_MASCOTA)
+    Call<UsuarioResponse> followMascota(@Path("id") String id, @Path("nombre") String nombre);
 }

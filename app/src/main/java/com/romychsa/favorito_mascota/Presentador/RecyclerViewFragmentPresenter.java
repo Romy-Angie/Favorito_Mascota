@@ -23,7 +23,6 @@ public class RecyclerViewFragmentPresenter implements IRecyclerViewFragmentPrese
     private IRecyclerViewFragment iRecyclerViewFragment;
     private Context context;
     private ConstructorMascotas constructorMascotas;
-    private ArrayList<Mascota> mascotas;
     private ArrayList<Mascota> mascotas2;
     private ArrayList<Mascota> mascotas1;
 
@@ -38,13 +37,13 @@ public class RecyclerViewFragmentPresenter implements IRecyclerViewFragmentPrese
     @Override
     public void obtenerMascotasBaseDatos() {
         constructorMascotas = new ConstructorMascotas(context);
-        mascotas = constructorMascotas.obtenerDatos();
+        mascotas1 = constructorMascotas.obtenerDatos();
         mostrarMascotas();
     }
 
     @Override
     public void mostrarMascotas() {
-        iRecyclerViewFragment.inicializarAdaptadorRV(iRecyclerViewFragment.crearAdaptador(mascotas));
+        iRecyclerViewFragment.inicializarAdaptadorRV(iRecyclerViewFragment.crearAdaptador(mascotas1));
         iRecyclerViewFragment.generarLinearLayoutVertical();
 
     }
@@ -55,14 +54,14 @@ public class RecyclerViewFragmentPresenter implements IRecyclerViewFragmentPrese
         RestApiAdapter restApiAdapter = new RestApiAdapter();
         Gson gsonMediaRecent = restApiAdapter.construyeGsonDeserializadorMediaRecent();
         EndPointsAPI endPointsAPI = restApiAdapter.establecerConexionRestApiInstagram(gsonMediaRecent);
-        Call<MascotaResponse> mascotaResponseCall = endPointsAPI.getRecentMedia();
+     Call<MascotaResponse> mascotaResponseCall = endPointsAPI.getRecentMedia();
 
 
         mascotaResponseCall.enqueue(new Callback<MascotaResponse>() {
             @Override
             public void onResponse(Call<MascotaResponse> call, Response<MascotaResponse> response) {
                 MascotaResponse mascotaResponse = response.body();
-                mascotas = mascotaResponse.getMascotas();
+                mascotas1 = mascotaResponse.getMascotas();
                 mostrarMascotas();
             }
 
@@ -73,7 +72,7 @@ public class RecyclerViewFragmentPresenter implements IRecyclerViewFragmentPrese
 
             }
         });
-
+/*
         Call<MascotaResponse> mascotaResponseCall1 = endPointsAPI.getRecentMedia1();
 
         mascotaResponseCall1.enqueue(new Callback<MascotaResponse>() {
@@ -82,7 +81,7 @@ public class RecyclerViewFragmentPresenter implements IRecyclerViewFragmentPrese
                 MascotaResponse mascotaResponse = response.body();
                 mascotas2 = mascotaResponse.getMascotas();
                     for(Mascota m : mascotas2){
-                        mascotas.add(m);
+                        mascotas1.add(m);
                     }
                 mostrarMascotas();
             }
@@ -92,7 +91,7 @@ public class RecyclerViewFragmentPresenter implements IRecyclerViewFragmentPrese
                 Log.e("FALLO LA CONEXIÓN", t.toString());
             }
         });
+
+*/
     }
-
-
 }

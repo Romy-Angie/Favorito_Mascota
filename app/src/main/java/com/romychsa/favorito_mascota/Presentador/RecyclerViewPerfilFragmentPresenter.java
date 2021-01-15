@@ -19,34 +19,31 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RecyclerViewPerfilFragmentPresenter implements IRecyclerViewFragmentPresenter {
+public class RecyclerViewPerfilFragmentPresenter implements IRecyclerViewFragmentPresenterPerfil {
     private IPerfilFragment iPerfilFragment;
     private Context context;
     private ConstructorMascotas constructorMascotas;
-    private ArrayList<Mascota> mascotas1;
-    private ArrayList<Mascota> mascotas2;
+    private ArrayList<Mascota> PERRO;
+    private ArrayList<Mascota> GATO;
+
 
     public RecyclerViewPerfilFragmentPresenter(IPerfilFragment iPerfilFragment, Context context) {
         this.iPerfilFragment = iPerfilFragment;
         this.context = context;
-        //obtenerMascotasBaseDatos();
-        ObtenerMediosRecientes();
+       //ObtenerMediosRecientesGato();
+       ObtenerMediosRecientesPerro();
 
     }
 
-    @Override
-    public void obtenerMascotasBaseDatos() {
-
-    }
 
     @Override
     public void mostrarMascotas() {
-        iPerfilFragment.inicializarAdaptadorRV(iPerfilFragment.crearAdaptador(mascotas2));
+        iPerfilFragment.inicializarAdaptadorRV(iPerfilFragment.crearAdaptador(PERRO));
         iPerfilFragment.generarGridLayout();
     }
 
     @Override
-    public void ObtenerMediosRecientes() {
+    public void ObtenerMediosRecientesPerro() {
         RestApiAdapter restApiAdapter = new RestApiAdapter();
         Gson gsonMediaRecent = restApiAdapter.construyeGsonDeserializadorMediaRecentPerfil();
         EndPointsAPI endPointsAPI = restApiAdapter.establecerConexionRestApiInstagram(gsonMediaRecent);
@@ -57,7 +54,7 @@ public class RecyclerViewPerfilFragmentPresenter implements IRecyclerViewFragmen
             @Override
             public void onResponse(Call<MascotaResponse> call, Response<MascotaResponse> response) {
                 MascotaResponse mascotaResponse = response.body();
-                mascotas1 = mascotaResponse.getMascotas();
+                PERRO = mascotaResponse.getMascotas();
                 mostrarMascotas();
             }
 
@@ -69,22 +66,32 @@ public class RecyclerViewPerfilFragmentPresenter implements IRecyclerViewFragmen
             }
         });
 
+    }
 
+    @Override
+    public void ObtenerMediosRecientesGato() {
+        RestApiAdapter restApiAdapter = new RestApiAdapter();
+        Gson gsonMediaRecent = restApiAdapter.construyeGsonDeserializadorMediaRecentPerfil();
+        EndPointsAPI endPointsAPI = restApiAdapter.establecerConexionRestApiInstagram(gsonMediaRecent);
         Call<MascotaResponse> mascotaResponseCall1 = endPointsAPI.getRecentMedia1();
+
 
         mascotaResponseCall1.enqueue(new Callback<MascotaResponse>() {
             @Override
             public void onResponse(Call<MascotaResponse> call, Response<MascotaResponse> response) {
                 MascotaResponse mascotaResponse = response.body();
-                mascotas2 = mascotaResponse.getMascotas();
+                GATO = mascotaResponse.getMascotas();
                 mostrarMascotas();
             }
+
             @Override
             public void onFailure(Call<MascotaResponse> call, Throwable t) {
                 Toast.makeText(context, "Algo paso durante el establecimiento de conexión", Toast.LENGTH_SHORT).show();
                 Log.e("FALLO LA CONEXIÓN", t.toString());
+
             }
         });
-
     }
+
+
 }
